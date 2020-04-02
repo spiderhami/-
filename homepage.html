@@ -5,7 +5,6 @@
         <title>小米首页</title>
         <link rel="stylesheet" href="homepage.css">
         <link href="font-awesome/css/all.css" rel="stylesheet">
-        <!--<script src="https://kit.fontawesome.com/18d32dd40f.js" crossorigin="anonymous"></script>-->
     </head>
     <body>
         <!-- 工具栏 -->
@@ -204,27 +203,47 @@
         <section class="rel wL mcn">
             <!-- 轮播图及切换 -->
             <div class="lb">
-                <a class="abs t0 lf0" href="">
-                    <img class="wL db show lb-img" src="images/lunbo-1.jpg" id="lunbo-container-1">
-                </a>
-                <a class="abs t0 lf0" href="">
-                    <img class="wL db lb-img" src="images/lunbo-1.jpg" id="lunbo-container-2">
-                </a>
+                <ul class="lb-list">
+                    <li>
+                        <a class="abs t0 lf0" href="">
+                            <img class="wL db show lb-img" src="images/lunbo-1.jpg" data-index="0">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="abs t0 lf0" href="">
+                            <img class="wL db lb-img" src="images/lunbo-2.jpg" data>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="abs t0 lf0" href="">
+                            <img class="wL db lb-img" src="images/lunbo-3.jpg" >
+                        </a>
+                    </li>
+                </ul>
+               
                 <div class="abs t50p lf234 f30 plr10 ptb20 arr lh30 cdd" id="lunbo-pre">
                     <i class="fas fa-chevron-left vrt"></i>
                 </div>
                 <div class="abs t50p r0 f30 plr10 ptb20 arr lh30 cdd" id="lunbo-next">
                     <i class="fas fa-chevron-right vrt"></i>
                 </div>
-                <div class="abs r30 b20 cir-wr">
-                    <input class="dn" type="radio" name="lunbo" id="lunbo-radio-1" checked>
-                    <label class="cir-lab" for="lunbo-radio-1"></label>
-                    <input class="dn" type="radio" name="lunbo" id="lunbo-radio-2">
-                    <label class="cir-lab" for="lunbo-radio-2"></label>
-                    <input class="dn" type="radio" name="lunbo" id="lunbo-radio-3">
-                    <label class="cir-lab" for="lunbo-radio-3"></label>
-                </div>
+
+                <ul class="abs r30 b20 cir-wr df" id="indicator">
+                    <li>
+                        <input class="dn" type="radio" name="lunbo" id="lunbo-radio-1" checked>
+                        <label class="cir-lab" for="lunbo-radio-1"></label>
+                    </li>
+                    <li>
+                        <input class="dn" type="radio" name="lunbo" id="lunbo-radio-2">
+                        <label class="cir-lab" for="lunbo-radio-2"></label>
+                    </li>
+                    <li>
+                        <input class="dn" type="radio" name="lunbo" id="lunbo-radio-3">
+                        <label class="cir-lab" for="lunbo-radio-3"></label>
+                    </li>
+                </ul>
             </div>
+
             <!-- classes without ctg prefix is based on this page -->
             <div class="ctg wC bgb4">
                 <ul class="ctg-ul">
@@ -901,6 +920,7 @@
                 </div>
             </div>
         </footer>
+        
     <script src="homepage.js"></script>
     </body>
 </html>

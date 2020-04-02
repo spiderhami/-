@@ -51,71 +51,54 @@ function hide() {
 const labels = document.querySelectorAll('.tgtag-lab');
 labels.forEach(label => label.addEventListener('mouseenter', function() {this.click();}));
 
-/* 自动轮播 */
-const lunboArea = document.querySelector('.lb');
-const radioButtons = document.querySelectorAll('input[name="lunbo"]');
+
+
+/**
+ * 1. 页面自动轮播
+ * 2. 鼠标进入轮播图片区域后，自动轮播取消；离开区域，自动轮播恢复
+ * 
+ */
+const listCarousel = document.querySelectorAll('.lb-list img');
+const buttonPrev = document.getElementById('lunbo-pre');
+const buttonNext = document.getElementById('lunbo-next');
+const listIndicator = document.querySelectorAll('#indicator li [type="radio"]');
+const divCarouselArea = document.querySelector('.lb');
+let currentIndex = 0;
 let timer;
-lunboArea.addEventListener('mouseenter', () => clearInterval(timer));
-lunboArea.addEventListener('mouseleave', () => autoLunbo());
 
-function autoLunbo() {
-    timer = setInterval(() => {
-        cursor++;
-        cursorHelper();
-        transitionHelper();
-        radioButtons[cursor].checked = true;
-    }, 2000);
+buttonPrev.addEventListener('click', () => handleArrowClick(-1));
+buttonNext.addEventListener('click', () => handleArrowClick(1));
+divCarouselArea.addEventListener('mouseenter', () => clearInterval(timer));
+divCarouselArea.addEventListener('mouseleave', autoCarousel);
+listIndicator.forEach((item, index) => item.addEventListener('click', () => handleIndicatorClick(index)));
+
+function handleArrowClick(step) {
+    const totalCarousel = listCarousel.length;
+    let prevIndex = currentIndex;
+    currentIndex = (currentIndex + step + totalCarousel) % totalCarousel;
+    shiftImage(prevIndex, currentIndex);
 }
 
-window.onload = autoLunbo;
-
-/* 轮播控制 */
-const lunboSrc = ['images/lunbo-1.jpg', 'images/lunbo-2.jpg', 'images/lunbo-3.jpg'];
-let cursor = 0;
-let isFlip = true;
-let isTransitionEnd = true;
-
-const next = document.getElementById('lunbo-next');
-const pre = document.getElementById('lunbo-pre');
-const container1 = document.getElementById('lunbo-container-1');
-const container2 = document.getElementById('lunbo-container-2');
-const radioButtonsArray = Array.from(radioButtons);
-
-next.addEventListener('click', lunbo);
-pre.addEventListener('click', lunbo);
-container1.addEventListener('transitionend', () => isTransitionEnd = true);
-radioButtons.forEach(btn => btn.addEventListener('click', changeCursor));
-
-function lunbo() {
-    if (!isTransitionEnd) {
-        return;
-    }
-    cursor = (this.id === 'lunbo-next')? (cursor+1) : (cursor-1);
-    cursorHelper();
-    transitionHelper();
+function handleIndicatorClick(indexIndicator) {
+    let prev = currentIndex;
+    currentIndex = indexIndicator;
+    shiftImage(prev, currentIndex);
 }
 
-function cursorHelper() {
-    const length = lunboSrc.length;
-    cursor = (cursor + length) % length;
+function shiftImage(prevIndex, currentIndex) {
+    listCarousel.forEach((item, index) => {
+        if (index === prevIndex) {
+            item.classList.remove('show');
+        }
+        if (index === currentIndex) {
+            item.classList.add('show');
+            listIndicator[index].checked = true;
+        }
+    });
 }
 
-function transitionHelper() {
-    if (isFlip) {
-        container2.setAttribute('src', lunboSrc[cursor]);
-    } else {
-        container1.setAttribute('src', lunboSrc[cursor]);
-    }
-    isFlip = !isFlip;
-    container1.classList.toggle('show');
-    container2.classList.toggle('show');
-    isTransitionEnd = false;
+function autoCarousel() {
+    timer = setInterval(() => buttonNext.click(), 3000);
 }
 
-function changeCursor() {
-    const index = radioButtonsArray.indexOf(this);
-    if (cursor !== index) {
-        cursor = index;
-        transitionHelper();
-    }
-}
+autoCarousel();
